@@ -58,5 +58,5 @@ def test_csv_upload_granted(application, client, add_user):
     assert db.session.query(User).count() == 1
     assert user.email == 'keith@webizly.com'
     with application.test_client(user=user) as client:
-        response = client.get('/songs/upload')
+        response = client.get('/transactions/upload')
         assert response.status_code == 200
