@@ -11,7 +11,7 @@ def test_adding_user(application):
         assert db.session.query(Transactions).count() == 0
         #showing how to add a record
         #create a record
-        user = User('kaw42@njit.edu', 'testtest',True)
+        user = User('kaw42@njit.edu', 'testtest')
         #add it to get ready to be committed
         db.session.add(user)
         #call the commit
@@ -24,18 +24,15 @@ def test_adding_user(application):
         #asserting that the user retrieved is correct
         assert user.email == 'kaw42@njit.edu'
         #this is how you get a related record ready for insert
-        user.songs= [Transactions("Fire","hi"),Transactions("Living on a Prayer","2")]
+        user.transactions= [Transactions("200","Debit"),Transactions("300","Credit")]
         #commit is what saves the songs
         db.session.commit()
         assert db.session.query(Transactions).count() == 2
-        song1 = Transactions.query.filter_by(title='Fire').first()
-        assert song1.title == "Fire"
-        #changing the title of the song
-        song1.title = "SuperSongTitle"
-        #saving the new title of the song
+        transaction1 = Transactions.query.filter_by(account_type='Debit').first()
+        assert transaction1.amount == "200"
         db.session.commit()
-        song2 = Transactions.query.filter_by(title='SuperSongTitle').first()
-        assert song2.title == "SuperSongTitle"
+        transaction2 = Transactions.query.filter_by(amount='300').first()
+        assert transaction2.account_type == "Credit"
         #checking cascade delete
         db.session.delete(user)
         assert db.session.query(User).count() == 0

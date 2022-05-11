@@ -6,6 +6,10 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import db
 from flask_login import UserMixin
 
+transaction_user = db.Table('transaction_user', db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('transaction_id', db.Integer, db.ForeignKey('transactions.id'))
+)
 
 class Transactions(db.Model):
     __tablename__ = 'transactions'
