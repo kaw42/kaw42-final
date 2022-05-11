@@ -49,7 +49,7 @@ def transactions_upload():
         current_user.transactions += list_of_transactions
         current_user.add_balance(total_transactions)
 
-        # commit changes
+        # commit changes  abc
         db.session.commit()
 
         ''' Project Requirement: log file with an entry for each time a user uploads a CSV playlist. '''
