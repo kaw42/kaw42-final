@@ -70,3 +70,11 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User %r>' % self.email
 
+    def set_balance(self, new_funds):
+        self.balance = new_funds
+
+    def get_balance(self):
+        return self.balance
+
+    def add_balance(self, new_funds):
+        self.balance = self.balance + new_funds
