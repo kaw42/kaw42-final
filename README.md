@@ -1,4 +1,4 @@
-[![Production Workflow 1](https://github.com/kaw42/kaw42P3/actions/workflows/prod.yml/badge.svg)](https://github.com/kaw42/kaw42P3/actions/workflows/prod.yml)
+[![Production Workflow 1](https://github.com/kaw42/kaw42-final/actions/workflows/prod.yml/badge.svg)](https://github.com/kaw42/kaw42-final/actions/workflows/prod.yml)
 * [Production Deployment](hhttps://kaw42-final-prod.herokuapp.com/)
 
 
