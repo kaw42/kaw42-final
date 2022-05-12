@@ -8,7 +8,7 @@ from jinja2 import TemplateNotFound
 from werkzeug.utils import secure_filename, redirect
 
 from app.db import db
-from app.db.models import User, Transactions
+from app.db.models import Transactions
 from app.transactions.forms import csv_upload
 
 transactions = Blueprint('transactions', __name__, template_folder='templates')
@@ -32,22 +32,23 @@ def transactions_browse(page):
 def transactions_upload():
     form = csv_upload()
     if form.validate_on_submit():
+        # user = current_user.email
         filename = secure_filename(form.file.data.filename)
         filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
 
         form.file.data.save(filepath)
 
         list_of_transactions = []
-        total_transactions = 0
+        current_user.balance = 0.00
         with open(filepath, encoding='utf-8-sig') as file:
             csv_file = csv.DictReader(file)
             for row in csv_file:
-                current_transaction = Transactions(row['AMOUNT'], row['TYPE'])
-                list_of_transactions.append(current_transaction)
-                total_transactions = total_transactions + int(current_transaction.amount)
+                list_of_transactions.append(Transactions(row['AMOUNT'], row['TYPE']))
+                current_user.balance += float(row['AMOUNT'])
 
-        current_user.transactions += list_of_transactions
-        current_user.add_balance(total_transactions)
+
+        current_user.transactions = list_of_transactions
+
 
         # commit changes  abc
         db.session.commit()
